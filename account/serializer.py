@@ -10,7 +10,10 @@ class GithubSerializer(serializers.Serializer):
     access_token = Github.getTokenFromCode(code)
     if access_token:
       user_info = Github.getUserInfo(access_token)
-      return user_info
+      if user_info:
+        return user_info
+      else:
+        raise serializers.ValidationError({"message": "Invalid access token"})
     else:
       raise serializers.ValidationError({"message": "Invalid code"})
 

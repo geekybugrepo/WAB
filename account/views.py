@@ -24,7 +24,7 @@ from wabTest.response_messages import *
 class GithubLogin(APIView):
   def post(self, request):
     github_data = GithubSerializer(data=request.data)
-    if github_data.is_valid():
+    if github_data.is_valid() and github_data('email') != None:
       email_already_exists = Account.account_repository.filter(email=request.data['email'], is_deleted=False).first()
       if email_already_exists:
         refresh = RefreshToken.for_user(account_signup)

@@ -16,10 +16,13 @@ class Github:
       response = requests.post("https://github.com/login/oauth/access_token",headers={'Accept':'application/json'}, params=payload)
       response_payload = response.json()
       access_token = response_payload.get('access_token')
+      if access_token is None:
+        error_description = response_payload.get('error_description')
+        raise AuthenticationFailed(error_description)
       return access_token
     except Exception as e:
       print(e)
-      return Response({"message": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
+      return None
 
 
   @staticmethod
@@ -30,8 +33,10 @@ class Github:
       }
       response = requests.get("https://api.github.com/user",headers=headers)
       response_payload = response.json()
+      if response_payload('status_code') == 401:
+        raise AuthenticationFailed("Invalid access token")
       return response_payload
     except Exception as e:
       print(e)
-      return Response({"message": "Invalid access token"}, status=status.HTTP_400_BAD_REQUEST)
+      return None
     
