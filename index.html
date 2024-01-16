@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Login</title>
+  <style>
+    /* Add your custom CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+      text-align: center;
+    }
+    
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>GitHub OAuth Login</h2>
+    <button onclick="redirectToGitHub()">Login with GitHub</button>
+  </div>
+
+  <script>
+    function redirectToGitHub() {
+      const clientId = "*************"; // Replace with your own Client ID
+      const currentUrl = window.location.href;
+      window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=user&redirect_url=${encodeURIComponent(
+        currentUrl
+      )}`;
+    }
+
+    function getCodeFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code");
+
+      if (code) {
+        console.log("Authorization Code:", code);
+        sendCodeToBackend(code);
+      } else {
+        console.log("No authorization code found in the URL.");
+      }
+    }
+
+    function sendCodeToBackend(code) {
+      const backendApiUrl = "http://127.0.0.1:8000/github-login"; // Update the URL with "http://" protocol prefix
+
+      const formData = new FormData();
+      formData.append("code", code);
+
+      fetch(backendApiUrl, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Backend Response:", data);
+        })
+        .catch((error) => {
+          console.error("Error sending code to backend:", error);
+        });
+    }
+
+    getCodeFromUrl();
+  </script>
+</body>
+</html>

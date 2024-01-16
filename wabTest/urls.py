@@ -7,10 +7,6 @@ from account.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # path('login', views.login, name='login'),
-    # path('logout', auth_views.LogoutView.as_view(), name='logout'),
-    # path('social-auth/', include('social_django.urls', namespace="social")),
     path('github-login', GithubLogin.as_view()),
     path('signup', UserSignup.as_view()),
     path('login', UserLogin.as_view()),

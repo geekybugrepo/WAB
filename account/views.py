@@ -12,14 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from wabTest.response_messages import *
-# from django.contrib.auth.decorators import login_required
-
-# def login(request):
-#   return render(request, 'login.html')
-
-# @login_required
-# def home(request):
-#   return render(request, 'home.html')
+from django.shortcuts import render
 
 class GithubLogin(APIView):
   def post(self, request):
@@ -45,6 +38,7 @@ class GithubLogin(APIView):
     else:
       return Response({"message": USER_CREATION_FAILED, "data": github_data.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+#NON-GITHUB SIGNUP
 class UserSignup(APIView):
   def post(self, request):
     user_data = UserSignupSerializer(data=request.data)

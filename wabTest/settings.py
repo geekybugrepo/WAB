@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-zb*vek)9-=($)&mvc^$al8gpksr0&6^o(!sv_8rs2r%#&&nruq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+  '*'
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -118,22 +122,22 @@ WSGI_APPLICATION = 'wabTest.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wab', 
-        'USER': 'wab', 
-        'PASSWORD': 'wab1963',
-        'HOST': 'localhost', 
-        'PORT': '5432',
-        'TEST': {
-            'NAME': 'wab_test',
-        },
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'wab', 
+    #     'USER': 'wab', 
+    #     'PASSWORD': 'wab1963',
+    #     'HOST': 'localhost', 
+    #     'PORT': '5432',
+    #     'TEST': {
+    #         'NAME': 'wab_test',
+    #     },
+    # }
   
-#   'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+  'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -183,15 +187,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.Account'
 
-AUTHENTICATION_BACKENDS = [
-    'social_core.backends.github.GithubOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
-
-GITHUB_CLIENT_ID = '98e8612ab2a1aeef5efb'
-GITHUB_CLIENT_SECRET = '8937db786c48c93a97a67f784b1fccad20f80202'
+GITHUB_CLIENT_ID = '***************' # REPLACE WITH YOUR OWN ID
+GITHUB_CLIENT_SECRET = '***********************' # REPLACE WITH YOUR OWN SECRET
