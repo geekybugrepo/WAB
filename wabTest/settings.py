@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'social_django',
     'account',
     'rest_framework',
@@ -95,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'wabTest.urls'
@@ -189,5 +191,4 @@ AUTH_USER_MODEL = 'account.Account'
 
 # GITHUB_CLIENT_ID = '***************' # REPLACE WITH YOUR OWN ID
 # GITHUB_CLIENT_SECRET = '***********************' # REPLACE WITH YOUR OWN SECRET
-GITHUB_CLIENT_ID = '0ae7198c9763386a02da' # REPLACE WITH YOUR OWN ID
-GITHUB_CLIENT_SECRET = '8bb2ae0667660fb9d6d65fc504835a3284527290'
+

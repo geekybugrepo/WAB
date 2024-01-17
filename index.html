@@ -49,7 +49,7 @@
 
     <script>
       function redirectToGitHub() {
-        const clientId = "0ae7198c9763386a02da"; // Replace with your own Client ID
+        const clientId = "************"; // Replace with your own Client ID
         const currentUrl = window.location.href;
         window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=user:email%20read:user&redirect_url=${encodeURIComponent(
           currentUrl
@@ -80,6 +80,7 @@
         })
           .then((response) => response.json())
           .then((data) => {
+            alert(data.message); // Remove this aler
             console.log("Backend Response:", data);
           })
           .catch((error) => {

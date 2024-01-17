@@ -19,12 +19,12 @@ class GithubLogin(APIView):
     if github_data.is_valid() and github_data['email'] != None:
       email_already_exists = Account.account_repository.filter(email=github_data['email'], is_deleted=False).first()
       if email_already_exists:
-        refresh = RefreshToken.for_user(account_signup)
+        refresh = RefreshToken.for_user(email_already_exists)
         return Response({
           'refresh': str(refresh), 'access': str(refresh.access_token),
           'message': SUCCESS_LOGIN}, status=status.HTTP_200_OK)
       
-      account_signup = Account(**github_data.validated_data)
+      account_signup = Account(email=github_data['email'], full_name=github_data['name'])
       account_signup.is_active = True
       try:
         account_signup.save()
