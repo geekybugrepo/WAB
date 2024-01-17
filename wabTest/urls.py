@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from account import views
 
-from account.views import *
+from account.views import GithubLogin, UserSignup, UserLogin, EditProfile, ViewProfile, DeleteUser
 
 urlpatterns = [
     path('admin/', admin.site.urls),

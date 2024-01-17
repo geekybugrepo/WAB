@@ -12,13 +12,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from wabTest.response_messages import *
-from django.shortcuts import render
 
 class GithubLogin(APIView):
   def post(self, request):
     github_data = GithubSerializer(data=request.data)
-    if github_data.is_valid() and github_data('email') != None:
-      email_already_exists = Account.account_repository.filter(email=request.data['email'], is_deleted=False).first()
+    if github_data.is_valid() and github_data['email'] != None:
+      email_already_exists = Account.account_repository.filter(email=github_data['email'], is_deleted=False).first()
       if email_already_exists:
         refresh = RefreshToken.for_user(account_signup)
         return Response({
@@ -111,7 +110,7 @@ class EditProfile(APIView):
           account_object.gender = request.data['gender']
           try:
             account_object.save()
-            return Response({"message": USER_FAILED_TO_UPDATE}, status=status.HTTP_201_CREATED)
+            return Response({"message": USER_UPDATED}, status=status.HTTP_201_CREATED)
           except Exception as e:
             return Response({"message": USER_FAILED_TO_UPDATE, "data": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:

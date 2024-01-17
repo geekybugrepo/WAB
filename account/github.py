@@ -33,10 +33,22 @@ class Github:
       }
       response = requests.get("https://api.github.com/user",headers=headers)
       response_payload = response.json()
-      if response_payload('status_code') == 401:
+      if response.status_code and response.status_code == 401:
         raise AuthenticationFailed("Invalid access token")
       return response_payload
     except Exception as e:
       print(e)
       return None
-    
+
+  @staticmethod
+  def getEmailData(access_token):
+      try:
+          headers = {
+              "Authorization": f"Bearer {access_token}"
+          }
+          response = requests.get("https://api.github.com/user/emails", headers=headers)
+          response.raise_for_status()
+          return response.json()
+      except requests.exceptions.RequestException as e:
+          print(e)
+          raise AuthenticationFailed("Failed to fetch user emails from GitHub")
